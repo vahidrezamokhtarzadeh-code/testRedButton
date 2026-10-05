@@ -1,0 +1,16 @@
+# Lock down iframe embedding — only allow YOUR site to embed this page.
+#
+# Replace `https://your-site.com` below with your actual site's origin
+# (including https://, no trailing slash). Add multiple lines for multiple
+# allowed origins. Use `https://*.your-site.com` to allow subdomains.
+#
+# After deploying, verify with:
+#   curl -sI https://your-temp-site.pages.dev/ | grep -i "frame-ancestors"
+#
+# IMPORTANT: Cloudflare Pages requires the `_headers` file to live at the
+# project root (not inside a folder). It is automatically picked up at build time.
+
+/*
+  Content-Security-Policy: frame-ancestors 'self' https://pysazweb.ir;
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Website — Big Red Button</title>
+  <meta name="description" content="A test website with one big red button. Press it. You know you want to." />
+  <style>
+    /* Visually identical to the z.ai Next.js version (same red, same sizing, same hover scale). */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #ffffff;
+      color: #0a0a0a;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 100%;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(1.875rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+    .subtitle {
+      max-width: 28rem;
+      margin: 0;
+      font-size: 1rem;
+      color: #6b7280;
+    }
+    .big-red-button {
+      /* Sizing: same as the Next.js version (288x192 -> 384x256 responsive) */
+      width: clamp(18rem, 70vw, 24rem);
+      height: clamp(12rem, 50vw, 16rem);
+      border: none;
+      border-radius: 9999px;
+      background: #dc2626; /* Tailwind red-600 */
+      color: #ffffff;
+      font-size: clamp(1.5rem, 4vw, 1.75rem);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 30px -5px rgba(220, 38, 38, 0.4);
+      outline: 4px solid rgba(252, 165, 165, 0.4); /* ring-red-300/40 */
+      outline-offset: 0;
+      transition: transform 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .big-red-button:hover {
+      transform: scale(1.05);
+      background: #ef4444; /* red-500 */
+      box-shadow: 0 20px 40px -10px rgba(239, 68, 68, 0.5);
+    }
+    .big-red-button:active { transform: scale(0.95); }
+    .big-red-button:focus-visible {
+      outline: 8px solid rgba(248, 113, 113, 0.7); /* red-400/70 */
+    }
+    .big-red-button .label {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    }
+    .status {
+      height: 1.5rem;
+      font-size: 1rem;
+      color: #6b7280;
+      margin: 0;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #0a0a0a; color: #fafafa; }
+      h1 { color: #fafafa; }
+      .subtitle, .status { color: #a1a1aa; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Test Website</h1>
+    <p class="subtitle">Press the button. You know you want to.</p>
+
+    <button
+      class="big-red-button"
+      type="button"
+      aria-label="Big red button"
+      id="bigRedButton"
+    >
+      <span class="label">Push Me</span>
+    </button>
+
+    <p class="status" id="status" aria-live="polite">Awaiting your mighty press…</p>
+  </main>
+
+  <script>
+    (function () {
+      var button = document.getElementById('bigRedButton');
+      var status = document.getElementById('status');
+      var count = 0;
+
+      function updateStatus() {
+        if (count === 0) {
+          status.textContent = 'Awaiting your mighty press…';
+        } else {
+          status.textContent = 'Clicked ' + count + ' time' + (count === 1 ? '' : 's') + '. Nice!';
+        }
+      }
+
+      button.addEventListener('click', function () {
+        count += 1;
+        updateStatus();
+      });
+
+      // Optional: keyboard support — Space/Enter already work natively on <button>,
+      // but we expose the count on keyup for clarity.
+      updateStatus();
+    })();
+  </script>
+</body>
+</html>
